@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+    Северсталь | Заметки
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+        <h2 class="text-center m-xl">Заметки</h2>
+
+        <a href="{% url 'note_create' %}?next=/" class="tag tag--pill tag--main" style="font-size: 2rem;"><i
+            class="fa-solid fa-circle-plus"> Добавить заметку</i></a>
+
+        {% if notes %}
+            {% for note in notes %}
+                <div class="card card--dark">
+                    <h2 class="text-center m-sm"><a href="{% url 'note_update' note.id %}?next=/">{{ note.title|truncatechars:25 }}</a></h2>
+
+                    <div class="card">
+                        {% if note.description %}
+                        <h3 class="text-left m-sm"><a href="{% url 'note_update' note.id %}?next=/">{{ note.description|truncatechars:60|safe|linebreaksbr }}</a></h3>
+                        {% endif %}
+                        <div>
+                            <strong class="text-left m-sm"><a href="{% url 'note_update' note.id %}?next=/">Добавлена: {{ note.created.date }} в {{ note.created.time }}</a></strong>
+                        </div>
+                        {% if note.updated != note.created %}
+                            <strong class="text-left m-sm"><a href="{% url 'note_update' note.id %}?next=/">Последнее изменение: {{ note.updated.date }} в {{ note.updated.time }}</a></strong>
+                        {% endif %}
+
+                        <div class="tet-left m-sm">
+                            <a href="{% url 'note_update' note.id %}?next=/"><i class="fa-solid fa-pen-to-square"> Редактировать</i></a>
+                            <form action="{% url 'note_delete' note.id %}" method="POST" style="display: inline-block;">
+                                {% csrf_token %}
+                                <input class="btn btn--md" type="submit" value="Удалить" onclick="return confirm('Вы действительно хотите удалить эту заметку?')">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}
