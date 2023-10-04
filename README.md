@@ -2,11 +2,11 @@
 ## Create a Python virtual environment:
 > python -m venv djangoenv
 ## Activate virtual environment:
-> source djangoenv/bin/activate
+> source djangoenv/Scripts/activate
 ## Clone repository:
 > https://github.com/dcierra/severstal_notes_app.git
 ## cd to directory:
-> cd severstal_notes_app
+> cd severstal_notes_app/notes_project
 ## Install requirements:
 > pip install -r requirements.txt
 ## Copy .env.example to .env:
